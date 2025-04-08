@@ -1,0 +1,238 @@
+Index: src/main/java/org/example/AirLlucmajor/cancelarReserva.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.AirLlucmajor;\r\n\r\npublic class cancelarReserva {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/AirLlucmajor/cancelarReserva.java b/src/main/java/org/example/AirLlucmajor/cancelarReserva.java
+--- a/src/main/java/org/example/AirLlucmajor/cancelarReserva.java	(revision ab6626a7d5c67516eabcaa7cfb35b4bd47b0cf97)
++++ b/src/main/java/org/example/AirLlucmajor/cancelarReserva.java	(date 1744103118388)
+@@ -1,4 +1,129 @@
+ package org.example.AirLlucmajor;
+ 
++import java.util.ArrayList;
++import java.util.Scanner;
++
+ public class cancelarReserva {
+-}
++
++    private static ArrayList<String> reservas = new ArrayList<>();
++
++    // Método para reservar un vuelo
++    public static void reservarVuelo(ArrayList<AñadirVuelosDisp> vuelosDisponibles) {
++        Scanner scanner = new Scanner(System.in);
++
++        // Filtrar vuelos activos (disponibles)
++        ArrayList<AñadirVuelosDisp> vuelosActivos = new ArrayList<>();
++        for (AñadirVuelosDisp vuelo : vuelosDisponibles) {
++            if (vuelo.estado) {
++                vuelosActivos.add(vuelo);
++            }
++        }
++
++        // Verificar si hay vuelos disponibles
++        if (vuelosActivos.isEmpty()) {
++            System.out.println("No hay vuelos disponibles para reservar.");
++            return;
++        }
++
++        // Solicitar información al usuario para realizar la reserva
++        System.out.print("Ingrese su nombre para la reserva: ");
++        String nombreUsuario = scanner.nextLine();
++
++        System.out.print("Ingrese el número del vuelo que desea reservar: ");
++        int indiceVuelo = scanner.nextInt();
++
++        if (indiceVuelo < 0 || indiceVuelo >= vuelosActivos.size()) {
++            System.out.println("Número de vuelo no válido.");
++            return;
++        }
++
++        // Realizar la reserva
++        AñadirVuelosDisp vueloSeleccionado = vuelosActivos.get(indiceVuelo);
++        vueloSeleccionado.estado = false;
++
++        // Crear un string con la información de la reserva
++        String infoReserva = "Usuario: " + nombreUsuario + " | " + vueloSeleccionado.origen + " " +
++                vueloSeleccionado.destino + " - " + vueloSeleccionado.dia + "/" +
++                vueloSeleccionado.mes + "/" + vueloSeleccionado.año;
++
++        // Guardar la reserva
++        reservas.add(infoReserva);
++        System.out.println("Vuelo reservado correctamente por " + nombreUsuario + "!");
++    }
++
++    // Método para cancelar una reserva
++    public static void cancelarReserva() {
++        Scanner scanner = new Scanner(System.in);
++
++        // Si no hay reservas, mostrar un mensaje
++        if (reservas.isEmpty()) {
++            System.out.println("No tienes reservas para cancelar.");
++            return;
++        }
++
++        // Mostrar las reservas actuales
++        System.out.println("Reservas actuales:");
++        for (int i = 0; i < reservas.size(); i++) {
++            System.out.println(i + ". " + reservas.get(i));
++        }
++
++        System.out.print("Ingrese el número de la reserva que desea cancelar: ");
++        int indiceReserva = scanner.nextInt();
++
++        // Verificar si la reserva es válida
++        if (indiceReserva < 0 || indiceReserva >= reservas.size()) {
++            System.out.println("Número de reserva no válido.");
++            return;
++        }
++
++        // Eliminar la reserva seleccionada
++        reservas.remove(indiceReserva);
++        System.out.println("Reserva cancelada correctamente.");
++    }
++
++    // Método para obtener las reservas actuales
++    public static ArrayList<String> getReservas() {
++        return reservas;
++    }
++
++    // Clase para representar un vuelo (simplificado)
++    public static class AñadirVuelosDisp {
++        String origen;
++        String destino;
++        int dia;
++        int mes;
++        int año;
++        boolean estado;  // true si el vuelo está disponible
++
++        public AñadirVuelosDisp(String origen, String destino, int dia, int mes, int año) {
++            this.origen = origen;
++            this.destino = destino;
++            this.dia = dia;
++            this.mes = mes;
++            this.año = año;
++            this.estado = true;  // El vuelo está disponible por defecto
++        }
++    }
++
++    public static void main(String[] args) {
++        // Crear algunos vuelos disponibles
++        ArrayList<AñadirVuelosDisp> vuelosDisponibles = new ArrayList<>();
++        vuelosDisponibles.add(new AñadirVuelosDisp("Madrid", "Barcelona", 10, 5, 2025));
++        vuelosDisponibles.add(new AñadirVuelosDisp("Barcelona", "Sevilla", 15, 5, 2025));
++        vuelosDisponibles.add(new AñadirVuelosDisp("Madrid", "Valencia", 20, 5, 2025));
++
++        // Probar la reserva
++        reservarVuelo(vuelosDisponibles);
++
++        // Ver las reservas
++        System.out.println("Reservas actuales:");
++        System.out.println(getReservas());
++
++        // Probar la cancelación
++        cancelarReserva();
++
++        // Ver las reservas después de la cancelación
++        System.out.println("Reservas después de cancelar:");
++        System.out.println(getReservas());
++    }
++}
+\ No newline at end of file
+Index: src/test/java/org/example/AirLlucmajor/CancelarReservaTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/org/example/AirLlucmajor/CancelarReservaTest.java b/src/test/java/org/example/AirLlucmajor/CancelarReservaTest.java
+new file mode 100644
+--- /dev/null	(date 1744103649588)
++++ b/src/test/java/org/example/AirLlucmajor/CancelarReservaTest.java	(date 1744103649588)
+@@ -0,0 +1,86 @@
++package org.example.AirLlucmajor;
++
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++import org.mockito.Mockito;
++
++import java.util.ArrayList;
++import java.util.Scanner;
++
++import static org.junit.jupiter.api.Assertions.*;
++import static org.mockito.Mockito.*;
++
++public class CancelarReservaTest {
++    private cancelarReserva gestor;
++    private ArrayList<cancelarReserva.AñadirVuelosDisp> vuelosDisponibles;
++
++    @BeforeEach
++    public void setUp() {
++        // Crear una instancia del gestor y la lista de vuelos
++        gestor = new cancelarReserva();
++        vuelosDisponibles = new ArrayList<>();
++
++        // Añadir algunos vuelos disponibles
++        vuelosDisponibles.add(new cancelarReserva.AñadirVuelosDisp("Madrid", "Barcelona", 10, 5, 2025));
++        vuelosDisponibles.add(new cancelarReserva.AñadirVuelosDisp("Barcelona", "Sevilla", 15, 5, 2025));
++        vuelosDisponibles.add(new cancelarReserva.AñadirVuelosDisp("Madrid", "Valencia", 20, 5, 2025));
++    }
++
++    @Test
++    public void testReservarVuelo() {
++        // Simulamos la entrada del usuario
++        Scanner scannerMock = mock(Scanner.class);
++        when(scannerMock.nextLine()).thenReturn("Juan");
++        when(scannerMock.nextInt()).thenReturn(1);  // El usuario selecciona el vuelo 1 (Barcelona-Sevilla)
++
++        // Llamar al método de reservar
++        cancelarReserva.reservarVuelo(vuelosDisponibles);
++
++        // Verificar que la reserva se haya realizado correctamente
++        assertEquals(1, cancelarReserva.getReservas().size(), "Debe haber una reserva.");
++        assertTrue(cancelarReserva.getReservas().get(0).contains("Juan"), "La reserva debe contener el nombre del usuario.");
++        assertFalse(vuelosDisponibles.get(1).estado, "El vuelo seleccionado debe marcarse como no disponible.");
++    }
++
++    @Test
++    public void testCancelarReserva() {
++        // Primero, simular la reserva
++        cancelarReserva.reservarVuelo(vuelosDisponibles);
++
++        // Crear un mock de Scanner para simular la entrada del usuario para la cancelación
++        Scanner scannerMock = mock(Scanner.class);
++        when(scannerMock.nextInt()).thenReturn(0);  // El usuario quiere cancelar la reserva número 0
++
++        // Llamar al método cancelarReserva
++        cancelarReserva.cancelarReserva();
++
++        // Verificar que la reserva se haya cancelado correctamente
++        assertEquals(0, cancelarReserva.getReservas().size(), "Las reservas deben estar vacías después de cancelarlas.");
++    }
++
++    @Test
++    public void testCancelarReservaNoExistenReservas() {
++        // Int
++        // entamos cancelar una reserva cuando no hay ninguna
++        cancelarReserva.cancelarReserva();
++
++        // Verificar que no haya reservas
++        assertEquals(0, cancelarReserva.getReservas().size(), "No debe haber reservas si no se ha realizado ninguna.");
++    }
++
++    @Test
++    public void testCancelarReservaConEntradaInvalida() {
++        // Primero, simular la reserva
++        cancelarReserva.reservarVuelo(vuelosDisponibles);
++
++        // Crear un mock de Scanner para simular la entrada de un número de reserva inválido
++        Scanner scannerMock = mock(Scanner.class);
++        when(scannerMock.nextInt()).thenReturn(10);  // El usuario ingresa un número de reserva inválido
++
++        // Llamar al método cancelarReserva
++        cancelarReserva.cancelarReserva();
++
++        // Verificar que la reserva no haya sido cancelada
++        assertEquals(1, cancelarReserva.getReservas().size(), "Las reservas no deben haberse cancelado con un número inválido.");
++    }
++}
