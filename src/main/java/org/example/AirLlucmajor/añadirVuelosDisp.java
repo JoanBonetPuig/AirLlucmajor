@@ -9,7 +9,6 @@ public class añadirVuelosDisp {
     String destino;
     boolean estado;
 
-
     public añadirVuelosDisp(int dia, int mes, int año, double precio, String origen, String destino, boolean estado) {
         if (dia >= 1 && dia <= 31) {
             this.dia = dia;
