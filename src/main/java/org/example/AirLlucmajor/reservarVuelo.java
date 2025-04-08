@@ -9,7 +9,6 @@ public class reservarVuelo {
     public static void reservarVuelo(ArrayList<añadirVuelosDisp> vuelosDisponibles) {
         Scanner scanner = new Scanner(System.in);
 
-        // Filtrar solo los vuelos que están disponibles
         ArrayList<añadirVuelosDisp> vuelosActivos = new ArrayList<>();
         for (añadirVuelosDisp vuelo : vuelosDisponibles) {
             if (vuelo.estado) {
@@ -17,7 +16,6 @@ public class reservarVuelo {
             }
         }
 
-        // Si no hay vuelos disponibles lo mostramos
         if (vuelosActivos.isEmpty()) {
             System.out.println("No hay vuelos disponibles para reservar.");
             return;
