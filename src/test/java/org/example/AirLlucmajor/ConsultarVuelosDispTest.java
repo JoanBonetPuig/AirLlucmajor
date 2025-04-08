@@ -6,15 +6,7 @@ import java.util.ArrayList;
 
 public class ConsultarVuelosDispTest {
 
-    @Test
-    public void testConsultarVuelosDiaYMesVuelosEncontrados() {
-        añadirVuelosDisp vuelo1 = new añadirVuelosDisp(30, 11, 2025, 200.75, "Sevilla", "Valencia", true);
-        ArrayList<añadirVuelosDisp> vuelos = new ArrayList<>();
-        vuelos.add(vuelo1);
-        consultarVuelos consulta = new consultarVuelos();
-        boolean resultado = consulta.consultarVuelosDiaYMes(vuelos, 30, 11);
-        assertTrue(resultado);
-    }
+
 
     @Test
     public void testConsultarVuelosDiaYMesNoVuelosEncontrados() {
@@ -24,6 +16,16 @@ public class ConsultarVuelosDispTest {
         consultarVuelos consulta = new consultarVuelos();
         boolean resultado = consulta.consultarVuelosDiaYMes(vuelos, 11, 2025);
         assertFalse(resultado);
+    }
+
+    @Test
+    public void testConsultarVuelosDiaYMesVuelosEncontrados() {
+        añadirVuelosDisp vuelo1 = new añadirVuelosDisp(30, 11, 2025, 200.75, "Sevilla", "Valencia", true);
+        ArrayList<añadirVuelosDisp> vuelos = new ArrayList<>();
+        vuelos.add(vuelo1);
+        consultarVuelos consulta = new consultarVuelos();
+        boolean resultado = consulta.consultarVuelosDiaYMes(vuelos, 30, 11);
+        assertTrue(resultado);
     }
 }
 
