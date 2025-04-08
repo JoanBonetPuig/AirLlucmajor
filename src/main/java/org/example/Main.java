@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.AirLlucmajor.añadirVuelosDisp;
 import org.example.AirLlucmajor.reservarVuelo;
+import org.example.AirLlucmajor.consultarVuelos;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -53,8 +54,6 @@ public class Main {
 
                 vuelos.add(nuevoVuelo);
 
-
-
                 System.out.println("✔️ Vuelo añadido correctamente!");
 
             } else if (opcion == 2) {
@@ -70,7 +69,12 @@ public class Main {
             } else if (opcion == 4) {
                 System.out.println("🧐 Consultando vuelos reservados...");
                 //Funcion 4
-
+                consultarVuelos CV = new consultarVuelos();
+                System.out.println("¿Que mes deseas consultar?");
+                int mes = scanner.nextInt();
+                System.out.println("¿Que dia del mes deseas consultar?");
+                int dia = scanner.nextInt();
+                CV.consultarVuelosDiaYMes(vuelos, dia, mes);
                 // Lógica para consultar vuelos reservados Adri
             } else if (opcion == 5) {
                 System.out.println("🚫 Cancelando una reserva...");

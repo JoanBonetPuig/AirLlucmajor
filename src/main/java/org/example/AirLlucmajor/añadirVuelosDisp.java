@@ -10,10 +10,14 @@ public class añadirVuelosDisp {
     boolean estado;
 
 
-
     public añadirVuelosDisp(int dia, int mes, int año, double precio, String origen, String destino, boolean estado) {
-        this.dia = dia;
-        this.mes = mes;
+        if (dia >= 1 && dia <= 31) {
+            this.dia = dia;
+        }
+
+        if (mes >= 1 && mes <= 12) {
+            this.mes = mes;
+        }
         this.año = año;
         this.precio = precio;
         this.origen = origen;
@@ -23,4 +27,5 @@ public class añadirVuelosDisp {
 
     public añadirVuelosDisp() {
     }
+
 }
