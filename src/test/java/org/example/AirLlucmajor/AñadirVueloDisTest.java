@@ -10,6 +10,7 @@ public class AñadirVueloDisTest {
 
         añadirVuelosDisp vuelo = new añadirVuelosDisp(10, 5, 2025, 150.50, "Madrid", "Barcelona", true);
 
+
         assertEquals(10, vuelo.dia);
         assertEquals(5, vuelo.mes);
         assertEquals(2025, vuelo.año);

@@ -59,6 +59,7 @@ public class Main {
             } else if (opcion == 2) {
                 System.out.println("📆 Consultando vuelos disponibles...");
                 //Funcion 2
+
                 // Lógica para consultar vuelos Miguel Angel
             } else if (opcion == 3) {
                 System.out.println("🛎️ Reservando un vuelo...");

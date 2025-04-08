@@ -14,6 +14,7 @@ public class consultarVuelos {
             }
         }
 
+
         if (!vuelosEncontrados) {
             System.out.println("❌ No hay vuelos reservados para esa fecha.");
         }

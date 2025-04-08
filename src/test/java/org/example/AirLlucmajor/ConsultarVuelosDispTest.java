@@ -18,6 +18,7 @@ public class ConsultarVuelosDispTest {
         assertFalse(resultado);
     }
 
+
     @Test
     public void testConsultarVuelosDiaYMesVuelosEncontrados() {
         añadirVuelosDisp vuelo1 = new añadirVuelosDisp(30, 11, 2025, 200.75, "Sevilla", "Valencia", true);
