@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.AirLlucmajor.añadirVuelosDisp;
 import org.example.AirLlucmajor.consultarVuelos;
+import org.example.AirLlucmajor.enviarNotificacion;
 import org.example.AirLlucmajor.reservarVuelo;
 
 import java.util.ArrayList;
@@ -84,7 +85,8 @@ public class Main {
             } else if (opcion == 6) {
                 System.out.println("📨 Enviando notificaciones...");
                 //Funcion 6
-
+                enviarNotificacion en = new enviarNotificacion();
+                en.notificacion();
                 // Lógica para enviar notificaciones Gemelo
             } else if (opcion == 7) {
                 System.out.println("👋 Saliendo del sistema... ¡Hasta pronto!");
