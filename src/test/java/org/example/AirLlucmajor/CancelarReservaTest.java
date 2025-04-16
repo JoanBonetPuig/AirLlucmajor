@@ -1,86 +1,56 @@
 package org.example.AirLlucmajor;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class CancelarReservaTest {
-    private cancelarReserva gestor;
-    private ArrayList<cancelarReserva.AñadirVuelosDisp> vuelosDisponibles;
 
-    @BeforeEach
-    public void setUp() {
-        // Crear una instancia del gestor y la lista de vuelos
-        gestor = new cancelarReserva();
-        vuelosDisponibles = new ArrayList<>();
+    @Test
+    void testCancelarReserva_ReservaExistente() {
+        // Crear una lista de reservas con algunas entradas
+        ArrayList<String> reservas = new ArrayList<>();
+        reservas.add("Usuario: Maria | Palma ➡ Madrid - 12/5/2025");
+        reservas.add("Usuario: Joan | Barcelona ➡ Sevilla - 15/5/2025");
 
-        // Añadir algunos vuelos disponibles
-        vuelosDisponibles.add(new cancelarReserva.AñadirVuelosDisp("Madrid", "Barcelona", 10, 5, 2025));
-        vuelosDisponibles.add(new cancelarReserva.AñadirVuelosDisp("Barcelona", "Sevilla", 15, 5, 2025));
-        vuelosDisponibles.add(new cancelarReserva.AñadirVuelosDisp("Madrid", "Valencia", 20, 5, 2025));
+        // Llamar al método cancelarReserva para cancelar la reserva de Maria a Madrid
+        boolean resultado = CancelarReserva.cancelarReserva(reservas, "Maria", "Palma", "Madrid");
+
+        // Verificar que la reserva fue eliminada correctamente
+        assertTrue(resultado);  // El método debe retornar true si la reserva fue cancelada
+        assertEquals(1, reservas.size());  // Solo debe quedar una reserva en la lista
+        assertFalse(reservas.contains("Usuario: Maria | Palma ➡ Madrid - 12/5/2025"));  // La reserva de Maria debe haber sido eliminada
     }
 
     @Test
-    public void testReservarVuelo() {
-        // Simulamos la entrada del usuario
-        Scanner scannerMock = mock(Scanner.class);
-        when(scannerMock.nextLine()).thenReturn("Juan");
-        when(scannerMock.nextInt()).thenReturn(1);  // El usuario selecciona el vuelo 1 (Barcelona-Sevilla)
+    void testCancelarReserva_ReservaNoExistente() {
+        // Crear una lista de reservas con algunas entradas
+        ArrayList<String> reservas = new ArrayList<>();
+        reservas.add("Usuario: Maria | Palma ➡ Madrid - 12/5/2025");
+        reservas.add("Usuario: Joan | Barcelona ➡ Sevilla - 15/5/2025");
 
-        // Llamar al método de reservar
-        cancelarReserva.reservarVuelo(vuelosDisponibles);
+        // Intentar cancelar una reserva que no existe (de un usuario distinto)
+        boolean resultado = CancelarReserva.cancelarReserva(reservas, "Pedro", "Palma", "Madrid");
 
-        // Verificar que la reserva se haya realizado correctamente
-        assertEquals(1, cancelarReserva.getReservas().size(), "Debe haber una reserva.");
-        assertTrue(cancelarReserva.getReservas().get(0).contains("Juan"), "La reserva debe contener el nombre del usuario.");
-        assertFalse(vuelosDisponibles.get(1).estado, "El vuelo seleccionado debe marcarse como no disponible.");
+        // Verificar que la cancelación falló porque la reserva no existe
+        assertFalse(resultado);  // El método debe retornar false si no se encuentra la reserva
+        assertEquals(2, reservas.size());  // La lista de reservas no debe haberse modificado
     }
 
     @Test
-    public void testCancelarReserva() {
-        // Primero, simular la reserva
-        cancelarReserva.reservarVuelo(vuelosDisponibles);
+    void testCancelarReserva_CancelacionDeReservaDuplicada() {
+        // Crear una lista con reservas duplicadas
+        ArrayList<String> reservas = new ArrayList<>();
+        reservas.add("Usuario: Maria | Palma ➡ Madrid - 12/5/2025");
+        reservas.add("Usuario: Maria | Palma ➡ Madrid - 12/5/2025");  // Duplicada
 
-        // Crear un mock de Scanner para simular la entrada del usuario para la cancelación
-        Scanner scannerMock = mock(Scanner.class);
-        when(scannerMock.nextInt()).thenReturn(0);  // El usuario quiere cancelar la reserva número 0
+        // Llamar al método cancelarReserva para cancelar una de las reservas de Maria
+        boolean resultado = CancelarReserva.cancelarReserva(reservas, "Maria", "Palma", "Madrid");
 
-        // Llamar al método cancelarReserva
-        cancelarReserva.cancelarReserva();
-
-        // Verificar que la reserva se haya cancelado correctamente
-        assertEquals(0, cancelarReserva.getReservas().size(), "Las reservas deben estar vacías después de cancelarlas.");
-    }
-
-    @Test
-    public void testCancelarReservaNoExistenReservas() {
-        // Int
-        // entamos cancelar una reserva cuando no hay ninguna
-        cancelarReserva.cancelarReserva();
-
-        // Verificar que no haya reservas
-        assertEquals(0, cancelarReserva.getReservas().size(), "No debe haber reservas si no se ha realizado ninguna.");
-    }
-
-    @Test
-    public void testCancelarReservaConEntradaInvalida() {
-        // Primero, simular la reserva
-        cancelarReserva.reservarVuelo(vuelosDisponibles);
-
-        // Crear un mock de Scanner para simular la entrada de un número de reserva inválido
-        Scanner scannerMock = mock(Scanner.class);
-        when(scannerMock.nextInt()).thenReturn(10);  // El usuario ingresa un número de reserva inválido
-
-        // Llamar al método cancelarReserva
-        cancelarReserva.cancelarReserva();
-
-        // Verificar que la reserva no haya sido cancelada
-        assertEquals(1, cancelarReserva.getReservas().size(), "Las reservas no deben haberse cancelado con un número inválido.");
+        // Verificar que la reserva fue eliminada correctamente
+        assertTrue(resultado);  // El método debe retornar true si la reserva fue cancelada
+        assertEquals(1, reservas.size());  // Solo debe quedar una reserva en la lista
+        assertTrue(reservas.contains("Usuario: Maria | Palma ➡ Madrid - 12/5/2025"));  // La otra reserva de Maria debe seguir presente
     }
 }
