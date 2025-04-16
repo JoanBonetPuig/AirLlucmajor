@@ -10,7 +10,12 @@ public class consultarVuelos {
         for (añadirVuelosDisp vuelo : vuelos) {
             if (vuelo.dia == dia && vuelo.mes == mes) {
                 vuelosEncontrados = true;
-                System.out.println("📅 Vuelo encontrado, su estado actual es: " + vuelo.estado);
+
+                if (vuelosEncontrados) {
+                    System.out.println("📅 Vuelo encontrado, su estado actual es no disponible");
+                } else {
+                    System.out.println("📅 Vuelo encontrado, su estado actual es disponible");
+                }
             }
         }
 
